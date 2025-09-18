@@ -1,0 +1,239 @@
+@font-face {
+  font-family: "Faune Italic";
+  src:
+    url("./Faune-TextItalic.otf") format("opentype");
+  font-weight: bold; 
+}
+
+@font-face {
+  font-family: "Iosevka Bendy Normal";
+  src:
+    url("./IosevkaBendy-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Faune";
+  src:
+    url("./Faune-TextRegular.otf") format("opentype");
+  font-weight: normal; 
+}
+
+html, body {
+  padding: none;
+  margin: none;
+  background-color: ghostwhite;
+  font-family: "Faune";
+
+  --padding: 1rem;
+  --border-width: 0.125rem;
+  --shadow-radius: 1rem;
+  --shadow-y-offset: 0.5rem;
+  --shadow-color: lightslategray;
+  --shadow-hover-color: slategray;
+}
+
+outer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  height: calc(100vh - 4rem - 3.5rem);
+}
+
+code {
+  display: flex;
+  padding: 1rem;
+  padding-top: 0;
+  width: 25%;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 1rem;
+  font-family: "Iosevka Bendy Normal";
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); 
+}
+
+.code-input {
+  resize: none;
+  width: 100%;
+  margin: none;
+  margin-top: 1rem;
+  border: none;
+  height: 100%;
+  font-family: "Iosevka Bendy Normal";
+}
+
+.code-input:focus {
+  outline: none;
+  border: none;
+}
+
+asm-display {
+  font-family: "Iosevka Bendy Normal";
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  height: 100%;
+  overflow: scroll;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-bottom: 1rem;
+}
+
+.stack {
+    display: grid;
+}
+
+.stack > * {
+    grid-row: 1;
+    grid-column: 1;
+}
+
+.loading-bar {
+  width: 0;
+}
+
+.loading-bar.loaded {
+  width: 100%;
+}
+
+code-display {
+  display: block;
+  height: 100%;
+}
+
+code-name {
+  justify-self: end;
+  display: block;
+  height: 1rem;
+  font-size: 1rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-bottom: -0.5rem;
+  font-family: Faune;
+  border-top: 0.125rem dotted #1e1e2f
+}
+
+screen {
+  display: grid;
+  grid-gap: 0.125rem;
+  grid-auto-flow: dense;
+  aspect-ratio: 1;
+  padding: 0;
+  background-color:ghostwhite;
+  margin: -0.125rem;
+  padding: 0.125rem;
+  justify-items: center;
+  align-items: center;
+  border-radius: 0.125rem;
+  grid-template-columns: repeat(21, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  place-content: center;
+}
+
+panel {
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1.5;
+  max-width: 43%;
+  background-color: white;
+  border-radius: 1rem;
+  font-family: "Iosevka Bendy Normal";
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); 
+}
+
+top-bar {
+  display: flex;
+  height: 1.5rem;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); 
+}
+
+button {
+  display: block;
+  background-color: ghostwhite;
+  border-radius: 1rem;
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); 
+  border: none;
+  padding: 0.5rem;
+  font-family: Faune;
+  transition: 0.125s ease-in-out
+}
+
+button:hover {
+  background-color: white;
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-hover-color); 
+}
+
+button:active {
+  transform: scale(96%);
+}
+
+@keyframes pop-in {
+  0% {
+    background-color: white;
+    width: 0%;
+    box-shadow: 0 0;
+  }
+
+  100% {
+    background-color: deepskyblue;
+    width: 100%;
+    box-shadow: 0 0 0.5rem inset ghostwhite;
+  }
+}
+
+.slider {
+  border-radius: 0.0625rem;
+  height: 0.125rem;
+  background-color: #000;
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-hover-color); 
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%; 
+  border: 0.125rem solid deepskyblue;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.slider::-moz-range-thumb {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 0.125rem solid deepskyblue;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+
+.slider::-moz-range-thumb:active {
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-hover-color); 
+  transform: scale(96%);
+  
+}
+
+.slider::-webkit-slider-thumb:active {
+  box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-hover-color); 
+  transform: scale(96%);
+}

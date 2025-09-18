@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>dda.mliu.dev</title>
+
+    <link rel="stylesheet" href="assets/main.css"> 
+  </head>
+
+  <body>
+    <outer-container>
+    <top-bar>
+      <span style="font-size: 1.5rem; width: 20rem; font-family: Faune">
+        29-9-25 DDA demo
+      </span>
+      <div style="display: flex; width: 100%; flex-direction: row-reverse; gap: 1rem; align-items: center">
+        <button style="font-size: 1rem" id="run">
+          run code
+        </button>
+        <div style="border-radius: 1rem; background-color: ghostwhite; box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); padding: 0.5rem; padding-left: 1rem; padding-right: 1rem; display: flex; flex-direction: row; align-items: center; gap: 0.5rem">
+          <span>'cycles' per instruction</span>
+          <input type="range" min="5" max="200" value="100" class="slider" id="cycle-count"></input>
+        </div>
+      </div>
+    </top-bar>
+    <container>
+    <code>
+      <textarea class="code-input" id="code-input"></textarea>
+      <code-name>
+        code
+      </code-name>
+    </code>
+    <panel id="panel">
+      <screen id="screen">
+      </screen>
+    </panel>
+    <code>
+      <asm-display id="asm-display">
+      </asm-display>
+      <code-name>
+        assembly
+      </code-name>
+    </code>
+    </container>
+    </outer-container>
+  </body>
+  <script src="assets/main.js"></script>
+</html>
