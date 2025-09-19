@@ -1065,7 +1065,7 @@ async function clearScreen() {
   let w = 10;
   for (let i = -w; i <= w; i++) {
     for (let j = -w; j <= w; j++) {
-      a += `<div id="${j}${i}" class="pixel" style="grid-row: ${i+w}; grid-col: ${j+w}"></div>`
+      a += `<div id="${j}${i}" class="pixel" style="grid-row: ${i+w+1}; grid-col: ${j+w+1}"></div>`
     }
   }
 

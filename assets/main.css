@@ -145,7 +145,7 @@ panel {
   align-items: center;
   justify-content: center;
   flex-grow: 1.5;
-  max-width: 43%;
+  width: 43%;
   background-color: white;
   border-radius: 1rem;
   font-family: "Iosevka Bendy Normal";
@@ -201,7 +201,7 @@ button:active {
 
 .pixel {
   width: 100%; 
-  box-shadow: 0 0 1rem inset ghostwhite; 
+  box-shadow: 0 0 0.5rem inset ghostwhite; 
   aspect-ratio: 1;
   border-radius: 10%;
   background-color: white;
