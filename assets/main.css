@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "Faune Italic";
+  font-family: "Faune Display";
   src:
-    url("./Faune-TextItalic.otf") format("opentype");
+    url("./Faune-DisplayBlack.otf") format("opentype");
   font-weight: bold; 
 }
 
@@ -133,7 +133,7 @@ screen {
   padding: 0.125rem;
   justify-items: center;
   align-items: center;
-  border-radius: 0.125rem;
+  border-radius: 0.25rem;
   grid-template-columns: repeat(21, 1fr);
   grid-template-rows: repeat(21, 1fr);
   place-content: center;
@@ -188,11 +188,13 @@ button:active {
     background-color: white;
     width: 0%;
     box-shadow: 0 0;
+    border-radius: 50%;
   }
 
   100% {
     background-color: deepskyblue;
     width: 100%;
+    border-radius: 10%;
     box-shadow: 0 0 0.5rem inset ghostwhite;
   }
 }

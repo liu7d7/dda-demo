@@ -598,6 +598,12 @@ function compileFor(root, ctx) {
   err = compileAny(root.inc, forCtx);
   if (err) return err;
 
+  for (const it of forCtx.locals.keys()) {
+    if (ctx.locals.has(it)) continue;
+    ctx.code.push(POP);
+    ctx.lines.push(root.end);
+  }
+
   ctx.code.push(JUMP);
   ctx.code.push(blockBegin);
   ctx.lines.push(root.end);
@@ -712,7 +718,7 @@ function compileInc(root, ctx) {
 
   ctx.code.push(INC);
   ctx.lines.push(root.begin);
-  if (!ctx.locals.has(root.lhs.value)) return "failed to find local named " + root.value;
+  if (!ctx.locals.has(root.lhs.value)) return "failed to find local named " + root.lhs.value;
   ctx.code.push(ctx.locals.get(root.lhs.value).slot);
   ctx.lines.push(root.begin);
 }
@@ -722,7 +728,7 @@ function compileDec(root, ctx) {
 
   ctx.code.push(DEC);
   ctx.lines.push(root.begin);
-  if (!ctx.locals.has(root.lhs.value)) return "failed to find local named " + root.value;
+  if (!ctx.locals.has(root.lhs.value)) return "failed to find local named " + root.lhs.value;
   ctx.code.push(ctx.locals.get(root.lhs.value).slot);
   ctx.lines.push(root.begin);
 }
@@ -820,7 +826,7 @@ function compile(root) {
 }
 
 function errorDisplay(err) {
-    document.getElementById("asm-display").innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: darkred"><span>${err}</span></div>`;
+    document.getElementById("asm-display").innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: wrap; font-size: 1rem; color: darkred"><div style="overflow: wrap">${err}</div></div>`;
 }
 
 function disassemble(code, run, cln, delay) {
@@ -1059,7 +1065,7 @@ async function clearScreen() {
   let w = 10;
   for (let i = -w; i <= w; i++) {
     for (let j = -w; j <= w; j++) {
-      a += `<div id="${j}${i}" style="width: 100%; box-shadow: 0 0 0.5rem inset ghostwhite; aspect-ratio: 1; border-radius: 0.125rem; background-color: white; grid-row: ${i+w}; grid-col: ${j+w}"></div>`
+      a += `<div id="${j}${i}" style="width: 100%; box-shadow: 0 0 0.5rem inset ghostwhite; aspect-ratio: 1; border-radius: 10%; background-color: white; grid-row: ${i+w}; grid-col: ${j+w}"></div>`
     }
   }
 
