@@ -437,6 +437,50 @@ function parseLet(ctx) {
   if (ctx.cur().type !== "let") return "expected let, got " + JSON.stringify(ctx.cur());
   ctx.adv();
 
+  if (ctx.cur().type === "lpar") {
+    ctx.adv();
+    let ids = [];
+    if (ctx.cur().type !== "id") return "expected id, got " + JSON.stringify(ctx.cur());
+    ids.push(ctx.cur().value);
+    ctx.adv();
+    while (ctx.cur().type === "comma") {
+      ctx.adv();
+      if (ctx.cur().type !== "id") return "expected id, got " + JSON.stringify(ctx.cur());
+      ids.push(ctx.cur().value);
+      ctx.adv();
+    }
+
+    if (ctx.cur().type !== "rpar") return "expected rpar, got " + JSON.stringify(ctx.cur());
+    ctx.adv();
+
+    if (ctx.cur().type !== "eq") return "expected =, got " + JSON.stringify(ctx.cur());
+    ctx.adv();
+
+    if (ctx.cur().type !== "lpar") return "expected lpar, got " + JSON.stringify(ctx.cur());
+    ctx.adv();
+
+    let exprs = [];
+    let exp = parseExpr(ctx);
+    if (typeof(exp) === "string") return exp;
+    exprs.push(exp);
+    while (ctx.cur().type === "comma") {
+      ctx.adv();
+      exp = parseExpr(ctx);
+      if (typeof(exp) === "string") return exp;
+      exprs.push(exp);
+    }
+
+    if (ctx.cur().type !== "rpar") return "expected rpar, got " + JSON.stringify(ctx.cur());
+    ctx.adv();
+    
+    if (ctx.cur().type !== "semicolon") return "expected semicolon, got " + JSON.stringify(ctx.cur());
+    ctx.adv();
+
+    if (exprs.length !== ids.length) return "multilet: incorrect number of values to assign; expected " + ids.length + ", got " + exprs.length;
+
+    return {type: "multilet", ids, exprs, begin, end: exprs[exprs.length - 1].end};
+  }
+
   if (ctx.cur().type !== "id") return "expected id, got " + JSON.stringify(ctx.cur());
   let id = ctx.cur();
   ctx.adv();
@@ -540,6 +584,14 @@ function compileNumber(root, ctx) {
 function compileLet(root, ctx) {
   ctx.locals.set(root.id.value, {slot: ctx.locals.size, line: root.begin});
   return compileAny(root.expr, ctx);
+}
+
+function compileMultiLet(root, ctx) {
+  for (let i = 0; i < root.ids.length; i++) {
+    ctx.locals.set(root.ids[i], {slot: ctx.locals.size, line: root.begin});
+    let err = compileAny(root.exprs[i], ctx);
+    if (err) return err;
+  }
 }
 
 function compileNeg(root, ctx) {
@@ -789,6 +841,7 @@ function compileAny(root, ctx) {
     case "block": return compileBlock(root, ctx);
     case "id": return compileVarGet(root, ctx);
     case "let": return compileLet(root, ctx);
+    case "multilet": return compileMultiLet(root, ctx);
     case "eq": return compileAssign(root, ctx);
     case "call": return compileCall(root, ctx);
     case "expstmt": return compileExpStmt(root, ctx);

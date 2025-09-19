@@ -145,7 +145,6 @@ panel {
   align-items: center;
   justify-content: center;
   flex-grow: 1.5;
-  width: 43%;
   background-color: white;
   border-radius: 1rem;
   font-family: "Iosevka Bendy Normal";
