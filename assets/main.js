@@ -886,7 +886,7 @@ function disassemble(code, run, cln, delay) {
   
   const beginFocus = `<div id="focus-focus" style="display: flex; flex-direction: row; padding-top: 1rem; padding-bottom: 1rem; padding-right: 1rem; box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color);display: flex;  flex-direction: column;gap: 0.5rem;">`;
 
-  const beginFocusRun = `<div class="stack" style="box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color);"><div id="loading-bar" class="loading-bar" style="background-color: #f0fff3; height: 100%; transition: width ${delay * delayMult / 1000}s linear;"></div><div id="focus-focus" style="padding-top: 1rem; padding-bottom: 1rem; padding-right: 1rem; display: flex; flex-direction: row; gap: 0.5rem; background-color: transparent;">`;
+  const beginFocusRun = `<div class="stack" style="box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color);"><div id="loading-bar" class="loading-bar" style="background-color: #f8fff8; height: 100%; transition: width ${delay * delayMult / 1000}s linear;"></div><div id="focus-focus" style="padding-top: 1rem; padding-bottom: 1rem; padding-right: 1rem; display: flex; flex-direction: row; gap: 0.5rem; background-color: transparent;">`;
 
   const beginFocus2 = `<div style="display: flex; flex-direction: row; padding-top: 1rem; padding-bottom: 1rem; padding-right: 1rem; box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color);display: flex;flex-direction: column;gap: 0.5rem;">`;
 
@@ -1065,7 +1065,7 @@ async function clearScreen() {
   let w = 10;
   for (let i = -w; i <= w; i++) {
     for (let j = -w; j <= w; j++) {
-      a += `<div id="${j}${i}" style="width: 100%; box-shadow: 0 0 0.5rem inset ghostwhite; aspect-ratio: 1; border-radius: 10%; background-color: white; grid-row: ${i+w}; grid-col: ${j+w}"></div>`
+      a += `<div id="${j}${i}" class="pixel" style="grid-row: ${i+w}; grid-col: ${j+w}"></div>`
     }
   }
 

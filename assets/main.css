@@ -195,8 +195,16 @@ button:active {
     background-color: deepskyblue;
     width: 100%;
     border-radius: 10%;
-    box-shadow: 0 0 0.5rem inset ghostwhite;
+    box-shadow: 0 0 1rem inset ghostwhite;
   }
+}
+
+.pixel {
+  width: 100%; 
+  box-shadow: 0 0 1rem inset ghostwhite; 
+  aspect-ratio: 1;
+  border-radius: 10%;
+  background-color: white;
 }
 
 .slider {
