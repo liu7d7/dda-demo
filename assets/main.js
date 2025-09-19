@@ -454,7 +454,7 @@ function parseLet(ctx) {
   if (ctx.cur().type !== "let") return "expected let, got " + JSON.stringify(ctx.cur());
   ctx.adv();
 
-  if (ctx.cur().type === "lpar") {
+  if (ctx.cur().type === "lcurly") {
     ctx.adv();
     let ids = [];
     if (ctx.cur().type !== "id") return "expected id, got " + JSON.stringify(ctx.cur());
@@ -467,13 +467,13 @@ function parseLet(ctx) {
       ctx.adv();
     }
 
-    if (ctx.cur().type !== "rpar") return "expected rpar, got " + JSON.stringify(ctx.cur());
+    if (ctx.cur().type !== "rcurly") return "expected rcurly, got " + JSON.stringify(ctx.cur());
     ctx.adv();
 
     if (ctx.cur().type !== "eq") return "expected =, got " + JSON.stringify(ctx.cur());
     ctx.adv();
 
-    if (ctx.cur().type !== "lpar") return "expected lpar, got " + JSON.stringify(ctx.cur());
+    if (ctx.cur().type !== "lcurly") return "expected lcurly, got " + JSON.stringify(ctx.cur());
     ctx.adv();
 
     let exprs = [];
@@ -487,7 +487,7 @@ function parseLet(ctx) {
       exprs.push(exp);
     }
 
-    if (ctx.cur().type !== "rpar") return "expected rpar, got " + JSON.stringify(ctx.cur());
+    if (ctx.cur().type !== "rcurly") return "expected rcurly, got " + JSON.stringify(ctx.cur());
     ctx.adv();
     
     if (ctx.cur().type !== "semicolon") return "expected semicolon, got " + JSON.stringify(ctx.cur());
