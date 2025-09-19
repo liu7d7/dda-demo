@@ -1077,7 +1077,7 @@ clearScreen();
 function setPixel(x, y) {
   let pix = document.getElementById(`${x}${y}`);
   if (!pix) return;
-  if (!pix.style.animation) pix.style.animation = '0.2s forwards ease-in-out pop-in';
+  if (!pix.style.animation) pix.style.animation = '0.5s forwards cubic-bezier(0, 0, 0, 1) pop-in';
 }
 
 window.addEventListener("resize", screenResize);
