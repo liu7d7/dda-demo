@@ -354,6 +354,23 @@ function parseFor(ctx) {
     let comp = parseExpr(ctx);
     if (typeof(comp) === "string") return comp;
 
+    if (ctx.cur().type === "semicolon") {
+      ctx.adv();
+      let inc = parseExpr(ctx);
+      if (typeof(inc) === "string") return inc;
+      if (ctx.cur().type !== "lcurly") return "expected lcurly, got " + JSON.stringify(ctx.cur());
+      ctx.adv();
+
+      let block = parseBlock(ctx);
+      if (typeof(block) === "string") return block;
+      if (ctx.cur().type !== "rcurly") return "expected rcurly, got " + JSON.stringify(ctx.cur());
+
+      let out = {type: "partialfor", comp, inc, block, begin, end: ctx.cur().line};
+      ctx.adv();
+
+      return out;
+    }
+
     if (ctx.cur().type !== "lcurly") return "expected lcurly, got " + JSON.stringify(ctx.cur());
     ctx.adv();
     let block = parseBlock(ctx);
@@ -631,10 +648,13 @@ function compileFor(root, ctx) {
     funcs: [...ctx.funcs]
   };
 
-  let err = compileLet(root.init, forCtx);
-  if (err) return err;
+  if (root.init) {
+    let err = compileLet(root.init, forCtx);
+    if (err) return err;
+  }
 
   let blockBegin = ctx.code.length;
+
   err = compileAny(root.comp, forCtx);
   if (err) return err;
 
@@ -650,8 +670,11 @@ function compileFor(root, ctx) {
   err = compileAny(root.inc, forCtx);
   if (err) return err;
 
+  ctx.code.push(POP);
+  ctx.lines.push(root.inc.begin);
+
   for (const it of forCtx.locals.keys()) {
-    if (ctx.locals.has(it)) continue;
+    if (ctx.locals.has(it) || (root.init && it === root.init.id.value)) continue;
     ctx.code.push(POP);
     ctx.lines.push(root.end);
   }
@@ -845,6 +868,7 @@ function compileAny(root, ctx) {
     case "eq": return compileAssign(root, ctx);
     case "call": return compileCall(root, ctx);
     case "expstmt": return compileExpStmt(root, ctx);
+    case "partialfor":
     case "for": return compileFor(root, ctx);
     case "if": return compileIf(root, ctx);
     case "while": return compileWhile(root, ctx);
@@ -976,7 +1000,7 @@ function disassemble(code, run, cln, delay) {
   }
 
   document.getElementById("asm-display").innerHTML = a;
-  document.getElementById("focus-focus")?.scrollIntoView(false);
+  document.getElementById("focus-focus")?.scrollIntoView({behavior: 'instant', block: 'center', container: 'nearest'});
   document.getElementById("loading-bar")?.classList.toggle("loaded");
 
   return lines;
@@ -1138,3 +1162,5 @@ window.addEventListener("resize", screenResize);
 document.getElementById("cycle-count").addEventListener("input", function (ev) {
   delayMult = ev.target.value;
 });
+
+
