@@ -686,8 +686,7 @@ function compileFor(root, ctx) {
 
   ctx.code[patch] = ctx.code.length;
 
-  for (const it of forCtx.locals.keys()) {
-    if (ctx.locals.has(it)) continue;
+  if (root.init) {
     ctx.code.push(POP);
     ctx.lines.push(root.end);
   }
@@ -729,13 +728,6 @@ function compileWhile(root, ctx) {
   ctx.lines.push(root.end);
 
   ctx.code[patch] = ctx.code.length;
-
-  for (const it of forCtx.locals.keys()) {
-    if (ctx.locals.has(it)) continue;
-    console.log(it);
-    ctx.code.push(POP);
-    ctx.lines.push(root.end);
-  }
 }
 
 function compileGlobal(root) {
