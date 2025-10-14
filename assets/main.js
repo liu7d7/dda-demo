@@ -1012,7 +1012,7 @@ codeInput.addEventListener("selectionchange", function(ev) {
 
 
 let stack = new Int32Array(4096);
-let delayMult = 200;
+let delayMult = 50;
 
 const delay = function (ms) { 
   return new Promise(res => setTimeout(res, ms * delayMult));

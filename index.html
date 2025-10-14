@@ -20,13 +20,42 @@
         </button>
         <div style="border-radius: 1rem; background-color: ghostwhite; box-shadow: 0 var(--shadow-y-offset) var(--shadow-radius) var(--shadow-color); padding: 0.5rem; padding-left: 1rem; padding-right: 1rem; display: flex; flex-direction: row; align-items: center; gap: 0.5rem">
           <span>'cycles' per instruction</span>
-          <input type="range" min="5" max="200" value="100" class="slider" id="cycle-count"></input>
+          <input type="range" min="10" max="100" value="50" class="slider" id="cycle-count"></input>
         </div>
       </div>
     </top-bar>
     <container>
     <code>
-      <textarea class="code-input" id="code-input" style="font-size: 1rem"></textarea>
+      <textarea class="code-input" id="code-input" style="font-size: 1rem">
+let r = 4;
+let r2 = r + r;
+
+let {x, y} = {r, 0};
+let {dy, dx} = {-2, r2 + r2 - 4};
+
+let d = r2 - 1;
+
+for y &lt;= x {
+  set_pixel(-y, -x);
+  set_pixel(y, -x);
+  set_pixel(y, x);
+  set_pixel(-y, x);
+  set_pixel(-x, -y);
+  set_pixel(x, -y);
+  set_pixel(x, y);
+  set_pixel(-x, y);
+
+  d = d + dy;
+  dy = dy - 4;
+  y++;
+
+  if d &lt; 0 {
+    d = d + dx;
+    dx = dx - 4;
+    x--;
+  }
+}
+      </textarea>
       <code-name>
         code
       </code-name>
